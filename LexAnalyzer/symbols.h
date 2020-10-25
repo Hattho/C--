@@ -1,0 +1,43 @@
+#ifndef SYMBOLS_H
+#define SYMBOLS_H
+#define END 0
+#define INT 1
+#define BOOL 2
+#define IF 3
+#define ELSE 4
+#define WHILE 5
+#define VOID 6
+#define TRUE 7
+#define FALSE 8
+#define RETURN 9
+#define CIN 10
+#define COUT 11
+#define INTEGER_LITERAL 12
+#define STRING_LITERAL 13
+#define CONSTANT 14
+#define LBRACE 15
+#define RBRACE 16
+#define LBRK 17
+#define RBRK 18
+#define LSQBKT 19
+#define RSQBKT 20
+#define COMMA 21
+#define ASSIGN 22
+#define END_OF_INSTRUCTION 23
+#define ADD 24
+#define SUBSTRACT 25
+#define MULT 26
+#define DIV 27
+#define NOT 28
+#define AND 29
+#define OR 30
+#define EQUAL 31
+#define NEQUAL 32
+#define LESS 33
+#define GREATER 34
+#define LESSEQ 35
+#define GREATEREQ 36
+#define LEFT 37 
+#define RIGHT 38
+#define IDENTIFIER 39
+#endif
