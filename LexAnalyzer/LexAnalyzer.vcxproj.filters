@@ -21,6 +21,9 @@
     <ClCompile Include="LexAnalyzer.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="c--.tab.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="c--.lex">
@@ -32,6 +35,9 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="symbols.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="c--.tab.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

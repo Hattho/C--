@@ -509,7 +509,7 @@ char *yytext;
 #line 1 "c--.lex"
 #line 9 "c--.lex"
 #include <stdio.h>
-#include "symbols.h"
+#include "c--.tab.h"
 
 void count();
 #line 515 "lex.yy.c"

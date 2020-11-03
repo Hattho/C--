@@ -1,8 +1,12 @@
-﻿  lex.yy.c
+﻿  c--.tab.c
+c--.tab.c(1145,22): warning C4013: 'yylex' undefined; assuming extern returning int
+c--.tab.c(1280,15): warning C4013: 'yyerror' undefined; assuming extern returning int
+c--.y(147,21): warning C4133: 'function': incompatible types - from 'char [5]' to 'FILE *const '
+  lex.yy.c
 c--.lex(16,9): warning C4013: 'comment' undefined; assuming extern returning int
 c--.lex(31,29): warning C4013: 'check_type' undefined; assuming extern returning int
 lex.yy.c(1600,46): warning C4013: 'isatty' undefined; assuming extern returning int
-  LexAnalyzer.c
   Generating Code...
 D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\c--.lex(93): warning C4716: 'comment': must return a value
+D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\c--.y(148): warning C4716: 'yyerror': must return a value
   LexAnalyzer.vcxproj -> D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\Debug\LexAnalyzer.exe
