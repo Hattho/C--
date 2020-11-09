@@ -1,5 +1,8 @@
 %{
 #include <stdio.h>
+
+int yyerror(char * s);
+extern int yylex(void);
 %}
 
 %token INT
@@ -71,7 +74,7 @@ formalDecl
  : type id
  ;
 block
- : LBRACE declList stmtList LBRACE
+ : LBRACE declList stmtList RBRACE
  ;
 declList
  : declList var_declaration
@@ -144,5 +147,6 @@ id
 
 int yyerror(char *errmsg)
 {
-     fprintf("%s \n", errmsg);
+     printf("%s \n", errmsg);
+     return 0;
 }

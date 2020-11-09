@@ -7,6 +7,8 @@
 
 extern FILE* yyin;
 extern int yylex(void);
+extern int yyparse(void);
+extern int yydebug;
 
 char* symbols[] = {
  "END",
@@ -53,18 +55,42 @@ char* symbols[] = {
 
 
 int main() {
-    int lexUnit = 0;
+    //int lexUnit = 0;
+    yydebug = 1;
     yyin = fopen("input.csrc", "rt");
     if (yyin != NULL) {
-        while ((lexUnit = yylex()) != END)
+
+        int result = yyparse();
+        switch (result)
+        {
+        case 0:
+            printf("Parse Successfull.\n");
+            break;
+
+        case 1:
+            printf("Invalid input encountered.\n");
+            break;
+
+        case 2:
+            printf("Out of memory.\n");
+            break;
+
+        default:
+            break;
+        }
+
+        /*while ((lexUnit = yylex()) != END)
         {
             printf(" -> TOKEN %s\n", symbols[lexUnit]);
-        }
+        }*/
+
         fclose(yyin);
     }
     else {
-        printf("Fisierul nu poate fi deschis. Erorr: %d", errno);
+        printf("Fisier inexistent/Fisierul nu poate fi deschis. Erorr: %d", errno);
         //printf("Fisierul nu poate fi deschis");
+
+
     }
 }
 

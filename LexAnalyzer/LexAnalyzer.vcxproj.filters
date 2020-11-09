@@ -32,6 +32,9 @@
     <None Include="input.csrc">
       <Filter>Resource Files</Filter>
     </None>
+    <None Include="c--.y">
+      <Filter>Resource Files</Filter>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="symbols.h">
