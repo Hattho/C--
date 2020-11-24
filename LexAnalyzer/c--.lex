@@ -7,6 +7,7 @@ IS			(u|U|l|L)*
 
 %{
 #include <stdio.h>
+#include "ast.h"
 #include "c--.tab.h"
 
 void count();
@@ -28,11 +29,11 @@ void count();
 "cout"		{count(); return(COUT); }
 
 
-{L}({L}|{D})*			{ count(); return(check_type()); }
-{D}+					{ count(); return(INTEGER_LITERAL); }
-L?\"(\\.|[^\\"])*\"		{ count(); return(STRING_LITERAL); }
-0{D}+{IS}?		    	{ count(); return(CONSTANT); }
-{D}+{IS}?		    	{ count(); return(CONSTANT); }
+{L}({L}|{D})*			{ count(); yylval.strings = strdup(yytext); return(check_type()); }
+{D}+					{ count(); yylval.intVal = atoi(yytext);return(INTEGER_LITERAL); }
+L?\"(\\.|[^\\"])*\"		{ count(); yylval.strings = strdup(yytext); return(STRING_LITERAL); }
+0{D}+{IS}?		    	{ count(); yylval.intVal = atoi(yytext); return(CONSTANT); }
+{D}+{IS}?		    	{ count(); yylval.intVal = atoi(yytext); return(CONSTANT); }
 
 
 "{"			{ count(); return(LBRACE); }

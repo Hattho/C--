@@ -24,6 +24,9 @@
     <ClCompile Include="c--.tab.c">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="ast.c">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <None Include="c--.lex">
@@ -41,6 +44,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="c--.tab.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ast.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

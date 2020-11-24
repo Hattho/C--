@@ -1,2 +1,8 @@
-﻿  LexAnalyzer.c
+﻿  c--.tab.c
+  lex.yy.c
+c--.lex(17,9): warning C4013: 'comment' undefined; assuming extern returning int
+c--.lex(32,62): warning C4013: 'check_type' undefined; assuming extern returning int
+lex.yy.c(1601,46): warning C4013: 'isatty' undefined; assuming extern returning int
+  Generating Code...
+D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\c--.lex(94): warning C4716: 'comment': must return a value
   LexAnalyzer.vcxproj -> D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\Debug\LexAnalyzer.exe

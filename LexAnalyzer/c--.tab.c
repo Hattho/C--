@@ -70,11 +70,14 @@
 #line 1 "c--.y"
 
 #include <stdio.h>
+#include "ast.h"
+
+Node* astRoot = NULL;
 
 int yyerror(char * s);
 extern int yylex(void);
 
-#line 78 "c--.tab.c"
+#line 81 "c--.tab.c"
 
 # ifndef YY_CAST
 #  ifdef __cplusplus
@@ -535,13 +538,13 @@ static const yytype_int8 yytranslate[] =
   /* YYRLINE[YYN] -- Source line where rule number YYN was defined.  */
 static const yytype_uint8 yyrline[] =
 {
-       0,    49,    49,    50,    51,    54,    55,    58,    59,    60,
-      63,    66,    67,    70,    71,    74,    77,    80,    81,    84,
-      85,    88,    89,    90,    91,    92,    93,    94,    95,    96,
-      97,    98,   101,   102,   103,   104,   105,   106,   107,   108,
-     109,   110,   111,   112,   113,   114,   115,   118,   119,   120,
-     121,   122,   123,   124,   125,   128,   129,   132,   133,   136,
-     137,   140,   143
+       0,    77,    77,    78,    79,    82,    83,    86,    87,    88,
+      91,    94,    95,    98,    99,   102,   105,   108,   109,   112,
+     113,   116,   117,   118,   119,   120,   121,   122,   123,   124,
+     125,   126,   129,   130,   131,   132,   133,   134,   135,   136,
+     137,   138,   139,   140,   141,   142,   143,   146,   147,   148,
+     149,   150,   151,   152,   153,   156,   157,   160,   161,   164,
+     165,   168,   171
 };
 #endif
 
@@ -1233,7 +1236,7 @@ yyreduce:
   switch (yyn)
     {
 
-#line 1237 "c--.tab.c"
+#line 1240 "c--.tab.c"
 
       default: break;
     }
@@ -1427,7 +1430,7 @@ yyreturn:
   return yyresult;
 }
 
-#line 146 "c--.y"
+#line 174 "c--.y"
 
 
 int yyerror(char *errmsg)

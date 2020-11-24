@@ -1,9 +1,13 @@
 int main () {
 int a ;
 a = 15;
-
+cin >> a ;
 if (a > b){
 	a = 12;
+	b = 10;
+}
+else {
+	a=2;
 }
 
 }
