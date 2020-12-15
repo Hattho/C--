@@ -31,7 +31,7 @@ void count();
 
 {L}({L}|{D})*			{ count(); yylval.strings = strdup(yytext); return(check_type()); }
 {D}+					{ count(); yylval.intVal = atoi(yytext);return(INTEGER_LITERAL); }
-L?\"(\\.|[^\\"])*\"		{ count(); yylval.strings = strdup(yytext); return(STRING_LITERAL); }
+"([^\\"]|\\")*"		{ count(); yylval.strings = strdup(yytext); return(STRING_LITERAL); }
 0{D}+{IS}?		    	{ count(); yylval.intVal = atoi(yytext); return(CONSTANT); }
 {D}+{IS}?		    	{ count(); yylval.intVal = atoi(yytext); return(CONSTANT); }
 

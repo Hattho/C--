@@ -1,8 +1,12 @@
+bool y;
 int main () {
 int a ;
-a = 15;
+int b[5];
+a = 15 ;
 cin >> a ;
 if (a > b){
+	int x;
+	bool z;
 	a = 12;
 	b = 10;
 }

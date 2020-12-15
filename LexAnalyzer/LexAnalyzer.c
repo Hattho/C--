@@ -2,13 +2,18 @@
 //
 
 #include <stdio.h>
+#include "ast.h"
+#include "SemanticAnalyzer.h"
 #include "symbols.h"
+#include <stdio.h>
 #include <errno.h>
+#include <string.h>
 
 extern FILE* yyin;
 extern int yylex(void);
 extern int yyparse(void);
 extern int yydebug;
+extern Node* astRoot;
 
 char* symbols[] = {
  "END",
@@ -56,7 +61,7 @@ char* symbols[] = {
 
 int main() {
     //int lexUnit = 0;
-    yydebug = 1;
+    //yydebug = 1;
     yyin = fopen("input.csrc", "rt");
     if (yyin != NULL) {
 
@@ -83,12 +88,19 @@ int main() {
         {
             printf(" -> TOKEN %s\n", symbols[lexUnit]);
         }*/
+        printAst(astRoot, 0);
+
+        SymTableNode* root = NULL;
+
+        createSymbolList(astRoot, 0, &root);
+        printSymbolList(root);
+
 
         fclose(yyin);
     }
     else {
         printf("Fisier inexistent/Fisierul nu poate fi deschis. Erorr: %d", errno);
-        //printf("Fisierul nu poate fi deschis");
+        
 
 
     }

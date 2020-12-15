@@ -50,6 +50,7 @@ extern int yylex(void);
 %precedence NEG
  
 %type <node> program
+%type <node> declaration
 %type <node> var_declaration
 %type <node> type
 %type <node> function_declaration
@@ -66,9 +67,8 @@ extern int yylex(void);
 %type <node> fnCallStmt
 %type <node> actualList
 %type <node> subscriptExpr
-%type <node> id
 
-%expect 36
+%expect 52
 
 %start program
 %%
@@ -81,11 +81,11 @@ extern int yylex(void);
 declaration
  : var_declaration                                  { $$ = createDeclarationNode($1); }
  | function_declaration                             { $$ = createDeclarationNode($1); }
- |                                                  { $$ = NULL}
+ |                                                  { $$ = NULL;}
  ;
-var_declaration
- : type id END_OF_INSTRUCTION                               { $$ = createVarDeclaration($1, $2, 0); }
- | type id LSQBKT INTEGER_LITERAL RSQBKT END_OF_INSTRUCTION { $$ = createVarDeclaration($1, $2, $4); }
+var_declaration 
+ : type IDENTIFIER END_OF_INSTRUCTION                               { $$ = createVarDeclaration($1, $2, 0); }
+ | type IDENTIFIER LSQBKT INTEGER_LITERAL RSQBKT END_OF_INSTRUCTION { $$ = createArrayDeclaration($1, $2, $4); }
  ;
 type
  : INT              { $$ = createTypeSpecifier("INT"); }
@@ -93,87 +93,89 @@ type
  | VOID             { $$ = createTypeSpecifier("VOID"); }
  ;
 function_declaration
- : type id parameters block                                 { $$ = createFunctionDeclarationNode($1, $2, $3, $4); }
+ : type IDENTIFIER parameters block                                 { $$ = createFunctionDeclarationNode($1, $2, $3, $4); }
  ;
 parameters
- : LBRK RBRK                                                { $$ = NULL}
+ : LBRK RBRK                                                { $$ = NULL;}
  | LBRK formalsList RBRK                                    { $$ = createParametersNode($2);}
  ;
 formalsList
- : formalDecl                                               { $$ = createFormalsList(NULL, $1);}
- | formalsList COMMA formalDecl                             { $$ = createFormalsList($1, $3);}
+ : formalDecl                                               { $$ = createListNode("FormalsList", $1); }
+ | formalsList COMMA formalDecl                              {
+					$$ = $1;
+					addLinkToList($$, $3);
+						}
  ;
 formalDecl
- : type id                                                  { $$ = createFormalDecl($1, $2);}
+ : type IDENTIFIER                                                  { $$ = createFormalDecl($1, $2);}
  ;
 block
  : LBRACE declList stmtList RBRACE                          { $$ = createBlock($2, $3);}
  ;
 declList
- : declList var_declaration                                 { $$ = createDecList($1, $2);}
- |                                                          { $$ = NULL}
+ : declList var_declaration                                 { $$ = $1; addLinkToList($$, $2);}
+ | var_declaration                                          { $$ = createListNode("DecList", $1); }
+ |                                                          { $$ = NULL;}
  ;
 stmtList
- : stmtList stmt                                            { $$ = createStmtList($1, $2);}
- |                                                          { $$ = NULL}
+ : stmtList stmt                                            { $$ = $1; addLinkToList($$, $2);}
+ | stmt                                                     { $$ = createListNode("StatementList", $1); }
+ |                                                          { $$ = NULL;}
  ;
 stmt
- : CIN RIGHT id END_OF_INSTRUCTION                          { $$ = createCin($3, NULL);}
- | CIN RIGHT id LSQBKT exp RSQBKT END_OF_INSTRUCTION        { $$ = createCin($3, $5);}
+ : CIN RIGHT IDENTIFIER END_OF_INSTRUCTION                          { $$ = createCin($3, NULL);}
+ | CIN RIGHT IDENTIFIER LSQBKT exp RSQBKT END_OF_INSTRUCTION        { $$ = createCin($3, $5);}
  | COUT LEFT exp END_OF_INSTRUCTION                         { $$ = createCout($3);}
  | subscriptExpr ASSIGN exp END_OF_INSTRUCTION              { $$ = createSubscriptExprStatement($1,$3);}
- | id ASSIGN exp END_OF_INSTRUCTION                         { $$ = createAssignStatement($1,$3);}
- | IF LBRK exp RBRK block                                   { $$ = createIfStatement($3, $4, NULL);}
- | IF LBRK exp RBRK block ELSE block                        { $$ = createIfStatement($3, $4, $6);}
+ | IDENTIFIER ASSIGN exp END_OF_INSTRUCTION                         { $$ = createAssignStatement($1,$3);}
+ | IF LBRK exp RBRK block                                   { $$ = createIfStatement($3, $5, NULL);}
+ | IF LBRK exp RBRK block ELSE block                        { $$ = createIfStatement($3, $5, $7);}
  | WHILE LBRK exp RBRK block                                { $$ = createWhileStatement($3, $5);}
  | RETURN exp END_OF_INSTRUCTION                            { $$ = createReturnStatement($2);}
  | RETURN END_OF_INSTRUCTION                                { $$ = createReturnStatement(NULL);}
  | fnCallStmt END_OF_INSTRUCTION                            { $$ = createFnCallStatement($1);}
  ;
 exp
- : exp ADD exp                  { $$ = createExp($1,$3);}
- | exp SUBSTRACT exp            { $$ = createExp($1,$3);}
- | exp MULT exp                 { $$ = createExp($1,$3);}
- | exp DIV exp                  { $$ = createExp($1,$3);}
- | NOT exp                      { $$ = createExp(NULL,$2);}
- | exp AND exp                  { $$ = createExp($1,$3);}
- | exp OR exp                   { $$ = createExp($1,$3);}
- | exp EQUAL exp                { $$ = createExp($1,$3);}
- | exp NEQUAL exp               { $$ = createExp($1,$3);}
- | exp LESS exp                 { $$ = createExp($1,$3);}
- | exp GREATER exp              { $$ = createExp($1,$3);}
- | exp LESSEQ exp               { $$ = createExp($1,$3);}
- | exp GREATEREQ exp            { $$ = createExp($1,$3);}
- | SUBSTRACT atom  %prec NEG    { $$ = createExp(NULL,$2);}
- | atom                         { $$ = createExp($1,NULL);}
+ : exp ADD exp                  { $$ = createAddExp($1,$3);}
+ | exp SUBSTRACT exp            { $$ = createSubstractExp($1,$3);}
+ | exp MULT exp                 { $$ = createMultExp($1,$3);}
+ | exp DIV exp                  { $$ = createDivExp($1,$3);}
+ | NOT exp                      { $$ = createNotExp($2);}
+ | exp AND exp                  { $$ = createAndExp($1,$3);}
+ | exp OR exp                   { $$ = createOrExp($1,$3);}
+ | exp EQUAL exp                { $$ = createEqualExp($1,$3);}
+ | exp NEQUAL exp               { $$ = createNEqualExp($1,$3);}
+ | exp LESS exp                 { $$ = createLessExp($1,$3);}
+ | exp GREATER exp              { $$ = createGreaterExp($1,$3);}
+ | exp LESSEQ exp               { $$ = createLesseqExp($1,$3);}
+ | exp GREATEREQ exp            { $$ = createGreatereqExp($1,$3);}
+ | SUBSTRACT atom  %prec NEG    { $$ = createNegativeExp($2);}
+ | atom                         { $$ = createAtomExp($1);}
  ;
 atom
- : INTEGER_LITERAL      { $$ = INTEGER_LITERAL}
- | STRING_LITERAL       { $$ = STRING_LITERAL}
- | TRUE                 { $$ = TRUE}
- | FALSE                { $$ = FALSE}
- | LBRK exp RBRK        { $$ = createAtom($2);}
- | fnCallExpr           { $$ = createAtom($1);}
- | subscriptExpr        { $$ = createAtom($1);}
- | id                   { $$ = createAtom($1);}
+ : INTEGER_LITERAL      { $$ = createIntLiteralNode($1);;}
+ | STRING_LITERAL       { $$ = createStrLiteralNode($1);;}
+ | TRUE                 { $$ = TRUE;}
+ | FALSE                { $$ = FALSE;}
+ | LBRK exp RBRK        { $$ = createFuncAtom($2);}
+ | fnCallExpr           { $$ = createfnCallAtom($1);}
+ | subscriptExpr        { $$ = createSubscriptAtom($1);}
+ | IDENTIFIER           { $$ = createIdentifierNode($1);}
  ;  
 fnCallExpr
- : id LBRK RBRK                 { $$ = createFnCallExpr($1,NULL);}
- | id LBRK actualList RBRK      { $$ = createFnCallExpr($1,$3);}
+ : IDENTIFIER LBRK RBRK                 { $$ = createFnCallExpr($1,NULL);}
+ | IDENTIFIER LBRK actualList RBRK      { $$ = createFnCallExpr($1,$3);}
  ;
 fnCallStmt
- : id LBRK RBRK                 { $$ = createFnCallStmt($1,NULL);}
- | id LBRK actualList RBRK      { $$ = createFnCallStmt($1,$3);}
+ : IDENTIFIER LBRK RBRK                 { $$ = createFnCallStmt($1,NULL);}
+ | IDENTIFIER LBRK actualList RBRK      { $$ = createFnCallStmt($1,$3);}
  ;
 actualList
- : exp                          { $$ = createActualList($1,NULL);}
- | actualList COMMA exp         { $$ = createActualList($1,$3);}
+ : exp                          { $$ = createListNode("ActualList", $1); }
+ | actualList COMMA exp         { $$ = $1; ($$, $3);}
  ;
 subscriptExpr
- : id LSQBKT exp RSQBKT         { $$ = createSubscriptExpr($1,$3);}
- ;
-id
- : IDENTIFIER                   { $$ = IDENTIFIER}
+ : IDENTIFIER LSQBKT exp RSQBKT         { $$ = createSubscriptExpr($1,$3);}
  ;
 
 %%
