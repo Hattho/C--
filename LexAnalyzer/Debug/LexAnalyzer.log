@@ -1,17 +1,7 @@
-﻿  LexAnalyzer.c
-  SemanticAnalyzer.c
-D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\SemanticAnalyzer.c(13,1): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
-D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\SemanticAnalyzer.c(70,19): warning C4133: '=': incompatible types - from 'SymTableNode *' to 'SymTableNode *'
-D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\SemanticAnalyzer.c(103,27): warning C4133: '=': incompatible types - from 'SymTableNode *' to 'SymTableNode *'
-D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\SemanticAnalyzer.c(105,26): warning C4133: '=': incompatible types - from 'SymTableNode *' to 'SymTableNode *'
-  ast.c
-  c--.tab.c
-c--.y(158,46): warning C4047: '=': 'Node *' differs in levels of indirection from 'int'
-c--.y(159,47): warning C4047: '=': 'Node *' differs in levels of indirection from 'int'
-  lex.yy.c
-c--.lex(17,9): warning C4013: 'comment' undefined; assuming extern returning int
-c--.lex(32,62): warning C4013: 'check_type' undefined; assuming extern returning int
-lex.yy.c(1600,46): warning C4013: 'isatty' undefined; assuming extern returning int
-  Generating Code...
-D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\c--.lex(94): warning C4716: 'comment': must return a value
+﻿  SemanticAnalyzer.c
+D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\SemanticAnalyzer.c(12,1): warning C4047: 'initializing': 'int' differs in levels of indirection from 'void *'
+D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\SemanticAnalyzer.c(86,19): warning C4133: '=': incompatible types - from 'SymTableNode *' to 'SymTableNode *'
+D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\SemanticAnalyzer.c(125,27): warning C4133: '=': incompatible types - from 'SymTableNode *' to 'SymTableNode *'
+D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\SemanticAnalyzer.c(127,26): warning C4133: '=': incompatible types - from 'SymTableNode *' to 'SymTableNode *'
+D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\SemanticAnalyzer.c(151,26): warning C4133: '=': incompatible types - from 'SymTableNode *' to 'SymTableNode *'
   LexAnalyzer.vcxproj -> D:\AN 4 SEM 1\Translator Design\C--\LexAnalyzer\Debug\LexAnalyzer.exe

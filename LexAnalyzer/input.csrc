@@ -1,8 +1,14 @@
 bool y;
+int suma( int a, int b){
+	int c;
+	c = a + b;
+	return c;
+}
 int main () {
-int a ;
-int b[5];
-a = 15 ;
+int a;
+int a;
+int b;
+a = 15;
 cin >> a ;
 if (a > b){
 	int x;

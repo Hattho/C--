@@ -88,11 +88,12 @@ int main() {
         {
             printf(" -> TOKEN %s\n", symbols[lexUnit]);
         }*/
+
         printAst(astRoot, 0);
 
         SymTableNode* root = NULL;
 
-        createSymbolList(astRoot, 0, &root);
+        createSymbolList(astRoot, 0, &root, "Global");
         printSymbolList(root);
 
 
